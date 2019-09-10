@@ -2,8 +2,8 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png"/>
     <div id="nav">
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">О программе</router-link>
+      <router-link to="/">Главная</router-link>
+      <router-link to="/about">О программе!</router-link>
     </div>
     <router-view/>
   </div>
