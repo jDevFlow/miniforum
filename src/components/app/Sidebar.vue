@@ -1,6 +1,5 @@
 <template lang="html">
   <ul class="sidenav app-sidenav" :class="{open: value}">
-
     <router-link
       v-for="link in links"
       :key="link.url"
@@ -19,11 +18,8 @@ export default {
   props:['value'],
   data:()=>({
     links:[
-      {title:'Статистика', url:'/', exact:true},
-      {title:'Список ПЦ', url:'/powercenters'},
-      {title:'Синхронизация', url:'/planning'},
-      {title:'Настройка полей', url:'/record'},
-      {title:'Категории', url:'/categories'},
+      {title:'Сообщения', url:'/', exact:true},
+      {title:'Голосование', url:'/voting'}
     ]
   })
 }
