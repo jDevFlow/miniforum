@@ -7,7 +7,7 @@
       <div class="app-page">
         <router-view/>
       </div>
-    </main>  
+    </main>
 </div>
 </template>
 

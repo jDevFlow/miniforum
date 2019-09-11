@@ -1,4 +1,5 @@
 <template lang="html">
+<div>
   <ul class="sidenav app-sidenav" :class="{open: value}">
     <router-link
       v-for="link in links"
@@ -11,6 +12,10 @@
       <a href="#" class="waves-effect waves-orange pointer">{{link.title}}</a>
     </router-link >
   </ul>
+  <div class="card">
+    <span>Счетчик посещений</span>
+  </div>
+</div>
 </template>
 
 <script>
