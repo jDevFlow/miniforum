@@ -71,7 +71,7 @@ export default {
     password:{required, minLength: minLength(8)}
   },
   mounted() {
-  if (messages[this.$route.query.message]) {
+    if (messages[this.$route.query.message]) {
       this.$message(messages[this.$route.query.message])
     }
 
@@ -91,9 +91,7 @@ export default {
         await this.$store.dispatch('login', formData)
 
         this.$router.push('/')
-      } catch (e) {
-
-      }
+      } catch (e) {}
 
     }
   }

@@ -78,7 +78,7 @@
 
 <script>
 import {email, required, minLength} from 'vuelidate/lib/validators'
-
+import messages from '@/utils/messages'
 export default {
   name:'register',
   data:()=>({
@@ -92,6 +92,12 @@ export default {
     password:{required, minLength: minLength(8)},
     name:{required},
     agree:{checked: v=>v}
+  },
+  mounted() {
+  if (messages[this.$route.query.message]) {
+      this.$message(messages[this.$route.query.message])
+    }
+
   },
   methods: {
     async submitHandler() {
@@ -107,7 +113,7 @@ export default {
       try {
         await this.$store.dispatch('register', formData2)
         this.$router.push('/')
-      } catch (e) {} 
+      } catch (e){}
 
     }
   }
