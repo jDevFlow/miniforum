@@ -19,7 +19,7 @@
           </a>
 
           <ul id='dropdown' class='dropdown-content'>
-            <li class="divider" tabindex="-1"></li>
+            <!--<li class="divider" tabindex="-1"></li>-->
             <li>
               <a href="#" class="black-text" @click.prevent="logout">
                 <i class="material-icons">assignment_return</i>Выйти
@@ -38,10 +38,9 @@ export default {
     dropdown:null,
   }),
   methods:{
-      logout(){
-      console.log('logout');
-      //await this.$store.dispatch('logout')
-      this.$router.push('/login?message=logout')
+    async logout(){
+        await this.$store.dispatch('logout')
+        this.$router.push('/login?message=logout')
     }
   },
   mounted(){
