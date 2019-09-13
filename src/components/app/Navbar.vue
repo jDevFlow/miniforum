@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar teal lighten-2">
+  <nav class="navbar light-blue">
     <div class="nav-wrapper">
       <div class="navbar-left">
         <a href="#" @click.prevent="$emit('click')">
@@ -7,6 +7,7 @@
         </a>
         <span class="black-text">{{date | date('datetime')}}</span>
       </div>
+
 
       <ul class="right hide-on-small-and-down">
         <li>
@@ -16,23 +17,37 @@
               data-target="dropdown"
               ref="dropdown"
           >
-            {{name}}
+            <!--
+            <template v-if="name">{{name}}</template>
+            <template v-else >Гость</template>
+            -->
+            {{nameCompleate}}
             <i class="material-icons right">arrow_drop_down</i>
           </a>
 
           <ul id='dropdown' class='dropdown-content'>
-            <li>
-              <router-link to="/profile" class="black-text">
-                <i class="material-icons">account_circle</i>Профиль
-              </router-link>
-            </li>
-            <li class="divider" tabindex="-1"></li>
-            <li>
-              <a href="#" class="black-text" @click.prevent="logout">
-                <i class="material-icons">assignment_return</i>Выйти
-              </a>
-            </li>
+            <template v-if="name">
+              <li>
+                <router-link to="/profile" class="black-text">
+                  <i class="material-icons">account_circle</i>Профиль
+                </router-link>
+              </li>
+              <li class="divider" tabindex="-1"></li>
+              <li>
+                <a href="#" class="black-text" @click.prevent="logout">
+                  <i class="material-icons">assignment_return</i>Выйти
+                </a>
+              </li>
+            </template>
+            <template v-else >
+              <li>
+                <a href="#" class="black-text" @click.prevent="login">
+                  <i class="material-icons">input</i>Войти
+                </a>
+              </li>
+            </template>
           </ul>
+
         </li>
       </ul>
     </div>
@@ -42,20 +57,33 @@
 
 <script>
 export default {
+  name:'navbar',
   data: () => ({
     date: new Date(),
     interval: null,
-    dropdown: null,
+    dropdown: null
   }),
   methods: {
     async logout() {
       await this.$store.dispatch('logout')
       this.$router.push('/login?message=logout')
+    },
+    login(){
+      this.$router.push('/login')
     }
   },
   computed: {
     name() {
-      return this.$store.getters.info.name
+        return  this.$store.getters.info.name
+    },
+    nameCompleate(){
+      var nametmp =  this.$store.getters.info.name
+      if(typeof nametmp != "undefined"){
+        return  this.$store.getters.info.name
+      } else{
+        console.log(nametmp);
+        return 'Гость'
+      }
     }
   },
   mounted() {

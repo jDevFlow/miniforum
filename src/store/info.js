@@ -9,7 +9,7 @@ export default {
       state.info = info
     },
     clearInfo(state) {
-      state.info = null
+      state.info = {}
     }
   },
   actions: {

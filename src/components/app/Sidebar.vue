@@ -9,12 +9,9 @@
       :to="link.url"
       :exact="link.exact"
         >
-      <a href="#" class="waves-effect waves-orange pointer">{{link.title}}</a>
+      <a href="#" class="waves-effect waves-yellow pointer"><i class="material-icons">{{link.icon}}</i> {{link.title}}</a>
     </router-link >
   </ul>
-  <div class="card">
-    <span>Счетчик посещений</span>
-  </div>
 </div>
 </template>
 
@@ -23,12 +20,9 @@ export default {
   props:['value'],
   data:()=>({
     links:[
-      {title:'Сообщения', url:'/', exact:true},
-      {title:'Голосование', url:'/voting'}
+      {title:'Сообщения', url:'/', exact:true ,icon:'message' },
+      {title:'Голосование', url:'/voting', icon: 'poll'}
     ]
   })
 }
 </script>
-
-<style lang="css" scoped>
-</style>

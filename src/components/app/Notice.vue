@@ -2,7 +2,7 @@
 <div>
   <div class="row">
     <div class="col s12">
-      <div class="card blue lighten-4">
+      <div class="card  blue-grey lighten-5">
 
 
         <span class="card-title">
@@ -12,9 +12,6 @@
 
         <div class="card-content">
           <p>{{ textbody }}</p>
-        </div>
-        <div class="card-action">
-          <button class="btn">Комментарии</button>
         </div>
       </div>
 
