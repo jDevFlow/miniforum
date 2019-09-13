@@ -6,7 +6,10 @@
 
 
         <span class="card-title">
-          Дата: {{ datecreate }} - Автор: {{ author }}
+          <div class="collection">
+             Автор: {{ author }}
+             <span class="new badge" data-badge-caption="">{{ datecreate }}</span>
+          </div>
         </span>
 
 
