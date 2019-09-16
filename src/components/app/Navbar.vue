@@ -1,57 +1,63 @@
 <template>
-  <nav class="navbar light-blue">
-    <div class="nav-wrapper">
-      <div class="navbar-left">
-        <a href="#" @click.prevent="$emit('click')">
-          <i class="material-icons black-text">dehaze</i>
-        </a>
-        <span class="black-text">{{date | date('datetime')}}</span>
-      </div>
+  <div id="nav">
+    <div class="navbar-fixed">
+      <nav class="blue darken-3">
+        <div class="nav-wrapper ">
+          <div class="navbar-left">
+            <a href="#" @click.prevent="$emit('click')">
+              <i class="material-icons white-text">dehaze</i>
+            </a>
+            <span class="white-text">{{date | date('datetime')}}</span>
+          </div>
 
 
-      <ul class="right hide-on-small-and-down">
-        <li>
-          <a
-              class="dropdown-trigger black-text"
-              href="#"
-              data-target="dropdown"
-              ref="dropdown"
-          >
-            <!--
-            <template v-if="name">{{name}}</template>
-            <template v-else >Гость</template>
-            -->
-            {{nameCompleate}}
-            <i class="material-icons right">arrow_drop_down</i>
-          </a>
+          <ul class="right hide-on-small-and-down">
+            <li>
+              <a
+                  class="dropdown-trigger white-text"
+                  href="#"
+                  data-target="dropdown"
+                  ref="dropdown"
+              >
+                <!--
+                <template v-if="name">{{name}}</template>
+                <template v-else >Гость</template>
+                -->
+                {{nameCompleate}}
+                <i class="material-icons right">arrow_drop_down</i>
+              </a>
 
-          <ul id='dropdown' class='dropdown-content'>
-            <template v-if="name">
-              <li>
-                <router-link to="/profile" class="black-text">
-                  <i class="material-icons">account_circle</i>Профиль
-                </router-link>
-              </li>
-              <li class="divider" tabindex="-1"></li>
-              <li>
-                <a href="#" class="black-text" @click.prevent="logout">
-                  <i class="material-icons">assignment_return</i>Выйти
-                </a>
-              </li>
-            </template>
-            <template v-else >
-              <li>
-                <a href="#" class="black-text" @click.prevent="login">
-                  <i class="material-icons">input</i>Войти
-                </a>
-              </li>
-            </template>
+              <ul id='dropdown' class='dropdown-content'>
+                <template v-if="name">
+                  <li>
+                    <router-link to="/profile" class="black-text">
+                      <i class="material-icons">account_circle</i>Профиль
+                    </router-link>
+                  </li>
+                  <li class="divider" tabindex="-1"></li>
+                  <li>
+                    <a href="#" class="black-text" @click.prevent="logout">
+                      <i class="material-icons">assignment_return</i>Выйти
+                    </a>
+                  </li>
+                </template>
+                <template v-else >
+                  <li>
+                    <a href="#" class="black-text" @click.prevent="login">
+                      <i class="material-icons">input</i>Войти
+                    </a>
+                  </li>
+                </template>
+              </ul>
+
+            </li>
           </ul>
-
-        </li>
-      </ul>
+        </div>
+      </nav>
     </div>
-  </nav>
+  </div>
+
+
 </template>
 
 
@@ -102,3 +108,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  nav{
+    padding: 0 2rem;
+  }
+</style>

@@ -12,13 +12,21 @@
         >
         <label for="description">Имя</label>
         <span
-              class="helper-text invalid">name</span>
+              class="helper-text invalid">{{name}}</span>
       </div>
-
-      <button class="btn waves-effect waves-light" type="submit">
-        Обновить
-        <i class="material-icons right">send</i>
-      </button>
     </form>
   </div>
 </template>
+<script>
+export default {
+  data:()=>{
+    
+  },
+  computed: {
+    name() {
+        return  this.$store.getters.info.name
+    },
+  }
+
+}
+</script>

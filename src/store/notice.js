@@ -21,8 +21,7 @@ export default {
         const datecreate = new Date().getTime()
 console.log(uid);
         const notice = await firebase.database().ref(`/notices/home`).push({uid, newtextbody,datecreate })
-        console.log(notice);
-        commit('addNotice', notice)
+        console.log(notice);        
       } catch (e) {
         commit('setError',e)
         throw e

@@ -24,7 +24,7 @@
            </div>
          </div>
          <div class="modal-footer">
-           <button href="#!" class="modal-close waves-effect waves-green btn" >
+           <button class="modal-close waves-effect waves-green btn" >
              <i class="large material-icons">send</i>
              Отправить
            </button>
