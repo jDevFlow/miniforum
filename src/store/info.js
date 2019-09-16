@@ -21,6 +21,11 @@ export default {
       } catch (e) {
 
       }
+    },
+    getName({state}){
+      console.log(state.info.name);
+      const name = state.info.name
+      return name
     }
   },
   getters: {

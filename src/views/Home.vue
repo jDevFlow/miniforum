@@ -8,23 +8,28 @@
       <Notice v-for="item in items" :textbody="item.textbody" :datecreate="item.datecreate" :author="item.author"/>
     </div>
     <div class="fixed-action-btn" v-if="isUser">
-      <router-link class="btn-floating btn-large blue" to="/record">
-        <i class="large material-icons">add</i>
-      </router-link>
+      <!-- Modal Trigger -->
+       <button class="waves-effect waves-light btn-floating modal-trigger" href="#modal">
+         <i class="large material-icons">add</i>
+       </button>
     </div>
-
-    <!-- Modal Trigger -->
-     <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-
      <!-- Modal Structure -->
-     <div id="modal1" class="modal bottom-sheet">
-       <div class="modal-content">
-         <h4>Modal Header</h4>
-         <p>A bunch of text</p>
-       </div>
-       <div class="modal-footer">
-         <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-       </div>
+     <div id="modal" ref="modal" class="modal bottom-sheet">
+       <form class=""  @submit.prevent="sendText" >
+         <div class="modal-content">
+           <div class="input-field col s12">
+             <i class="material-icons prefix">mode_edit</i>
+             <textarea id="textarea1" v-model.text="newtextbody" class="materialize-textarea"></textarea>
+             <label for="textarea1">Сообщение</label>
+           </div>
+         </div>
+         <div class="modal-footer">
+           <button href="#!" class="modal-close waves-effect waves-green btn" >
+             <i class="large material-icons">send</i>
+             Отправить
+           </button>
+         </div>
+       </form>
      </div>
 </div>
 </template>
@@ -34,17 +39,25 @@ import Notice from '@/components/app/Notice.vue'
 export default {
   name: 'home',
   data: () => ({
-    items: [
-    {datecreate:'2019-02-01 11:55:22', textbody: 'Foo FooFoo FooFooFoo FooFooFooFoo' , author:'figaro' },
-    {datecreate:'2019-06-01 10:05:12',  textbody: 'Bar BarBar BarBarBar BarBarBarBar', author: 'figaro'},
-    {datecreate:'2019-02-01 11:55:22', textbody: 'Foo2 FooFoo2 FooFooFoo2 FooFooFooFoo2' , author:'figaro' },
-    {datecreate:'2019-06-01 10:05:12',  textbody: 'Bar2 BarBar2 BarBarBar2 BarBarBarBar2 <br/> Bar2 BarBar2 BarBarBar2 BarBarBarBar2', author: 'figaro'}
-  ],
-  modal1:null
+    items: [],
+  modal:null,
+  newtextbody:''
   }),
-  mounted() {
-    this.modal1 = M.Modal.init(this.$refs.modal1)
+  methods: {
+    async sendText() {
+      console.log(this.newtextbody)
+      try {
+        await this.$store.dispatch('sendNotice',{newtextbody:this.newtextbody})
+        this.newtextbody = ''
+        this.$message('Сообщение отправлено')
+        this.items = await this.$store.dispatch('fetchNotice')
+      } catch (e) {}
+    }
+  },
+  async mounted() {
+    this.modal = M.Modal.init(this.$refs.modal,{})
 
+    this.items = await this.$store.dispatch('fetchNotice')
   },
   computed:{
     isUser(){

@@ -23,7 +23,7 @@ Vue.filter('date', dateFilter)
 Vue.component('Loader', Loader)
 
 firebase.initializeApp({
-  
+
 });
 let app
 
