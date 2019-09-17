@@ -16,12 +16,9 @@ export default {
     async sendNotice({commit,dispatch}, {newtextbody}){
       try {
         //const uid = await dispatch('getUid')
-
         const uid = await dispatch('getName')
         const datecreate = new Date().getTime()
-console.log(uid);
         const notice = await firebase.database().ref(`/notices/home`).push({uid, newtextbody,datecreate })
-        console.log(notice);        
       } catch (e) {
         commit('setError',e)
         throw e

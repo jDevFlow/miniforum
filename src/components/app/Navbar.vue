@@ -23,12 +23,12 @@
                 <template v-if="name">{{name}}</template>
                 <template v-else >Гость</template>
                 -->
-                {{nameCompleate}}
+                {{name}}
                 <i class="material-icons right">arrow_drop_down</i>
               </a>
 
               <ul id='dropdown' class='dropdown-content'>
-                <template v-if="name">
+                <template v-if="!isGuest">
                   <li>
                     <router-link to="/profile" class="black-text">
                       <i class="material-icons">account_circle</i>Профиль
@@ -67,7 +67,9 @@ export default {
   data: () => ({
     date: new Date(),
     interval: null,
-    dropdown: null
+    dropdown: null,
+    isGuest:true,
+    name:'guest'
   }),
   methods: {
     async logout() {
@@ -78,27 +80,26 @@ export default {
       this.$router.push('/login')
     }
   },
-  computed: {
-    name() {
-        return  this.$store.getters.info.name
-    },
-    nameCompleate(){
-      var nametmp =  this.$store.getters.info.name
-      if(typeof nametmp != "undefined"){
-        return  this.$store.getters.info.name
-      } else{
-        console.log(nametmp);
-        return 'Гость'
-      }
-    }
-  },
   mounted() {
-    this.interval = setInterval(() => {
-      this.date = new Date()
-    }, 1000)
-    this.dropdown = M.Dropdown.init(this.$refs.dropdown, {
-      constrainWidth: false
-    })
+    var nametmp
+    try {
+      nametmp =  this.$store.getters.info.name
+    } catch (e) {
+
+    } finally {
+      if(typeof nametmp != "undefined"){
+        this.name = nametmp
+        this.isGuest= false
+      } else{
+        this.name = 'Гость'
+      }
+      this.interval = setInterval(() => {
+        this.date = new Date()
+      }, 1000)
+      this.dropdown = M.Dropdown.init(this.$refs.dropdown, {
+        constrainWidth: false
+      })
+    }
   },
   beforeDestroy() {
     clearInterval(this.interval)
@@ -110,6 +111,7 @@ export default {
 </script>
 <style lang="scss" scoped>
   nav{
+    z-index: 999;
     padding: 0 2rem;
   }
 </style>

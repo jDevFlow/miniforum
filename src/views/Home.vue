@@ -1,13 +1,9 @@
 <template lang="html">
 <div>
-
-
-
-
     <div class="row">
       <Notice v-for="item in items" :textbody="item.textbody" :datecreate="item.datecreate" :author="item.author"/>
     </div>
-    <div class="fixed-action-btn" v-if="isUser">
+    <div class="fixed-action-btn" v-if="!isGuest">
       <!-- Modal Trigger -->
        <button class="waves-effect waves-light btn-floating modal-trigger" href="#modal">
          <i class="large material-icons">add</i>
@@ -41,11 +37,14 @@ export default {
   data: () => ({
     items: [],
   modal:null,
-  newtextbody:''
+  newtextbody:'',
+  isGuest:true
   }),
+  async created() {
+    this.items = await this.$store.dispatch('fetchNotice')
+  },
   methods: {
     async sendText() {
-      console.log(this.newtextbody)
       try {
         await this.$store.dispatch('sendNotice',{newtextbody:this.newtextbody})
         this.newtextbody = ''
@@ -55,13 +54,26 @@ export default {
     }
   },
   async mounted() {
-    this.modal = M.Modal.init(this.$refs.modal,{})
 
-    this.items = await this.$store.dispatch('fetchNotice')
+    var nametmp
+    try {
+      nametmp =  this.$store.getters.info.name
+    } catch (e) {
+
+    } finally {
+      if(typeof nametmp != "undefined"){
+        this.isGuest= false
+      } else{
+
+      }
+      this.modal = M.Modal.init(this.$refs.modal,{})
+      this.items = await this.$store.dispatch('fetchNotice')
+    }
   },
-  computed:{
-    isUser(){
-      return  this.$store.getters.info.name
+  beforeDestroy() {
+    //do something before destroying vue instance
+    if (this.modal && this.modal.destroy) {
+      this.modal.destroy()
     }
   },
   components: {

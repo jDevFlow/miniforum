@@ -1,7 +1,12 @@
 <template lang="html">
   <form class="card auth-card" @submit.prevent="submitHandler">
     <div class="card-content">
-      <span class="card-title">Авторизация</span>
+      <span class="card-title">Авторизация
+        <div class="right">
+          <router-link to="/" >
+            <a class="btn">Войти как Гость</a>
+          </router-link></div>
+      </span>
       <div class="input-field">
         <input
             id="email"
@@ -48,7 +53,6 @@
           <i class="material-icons right">send</i>
         </button>
       </div>
-
       <p class="center">
         Нет аккаунта?
         <router-link to="/register">Зарегистрироваться</router-link>
@@ -94,6 +98,9 @@ export default {
         this.$router.push('/')
       } catch (e) {}
 
+    },
+    submitHomeHowGuest(){
+      this.$router.push('/')
     }
   }
 

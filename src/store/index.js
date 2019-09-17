@@ -23,6 +23,6 @@ export default new Vuex.Store({
     error:s => s.error
   },
   modules:{
-    auth,info,notice, voting
+    auth,info,notice,voting
   }
 })
