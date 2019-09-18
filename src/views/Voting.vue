@@ -13,37 +13,39 @@
               </div>
               <div id="voting" class="col s12">
                 <div class="card" >
-                  <div class="card-content">
+                  <div class="card-content" >
                     <h5>Ваш любимый язык программирования</h5>
-                    <p>
-                      <label>
-                        <img src="https://www.tutorialspoint.com/images/java8.png" alt=""  class="circle">
-                        <input class="with-gap" name="group1" type="radio" value="Java" v-model="votlang">
-                        <span>Java</span>
-                      </label>
-                    </p>
-                    <p>
-                      <label>
-                        <img src="https://www.tutorialspoint.com/images/Python.png" alt=""  class="circle">
-                        <input class="with-gap" name="group1" type="radio" value="Python" v-model="votlang">
-                        <span>Python</span>
-                      </label>
-                    </p>
-                    <p>
-                      <label>
-                        <img src="https://www.tutorialspoint.com/images/php.png" alt=""  class="circle">
-                        <input class="with-gap" name="group1" type="radio" value="PHP" v-model="votlang">
-                        <span>PHP</span>
-                      </label>
-                    </p>
-                    <p>
-                      <label>
-                        <img src="https://www.tutorialspoint.com/images/Swift.png" alt=""  class="circle">
-                        <input class="with-gap" name="group1" type="radio" value="Swift" v-model="votlang">
-                        <span>Swift</span>
-                      </label>
-                    </p>
-                    <div class="card-action">
+                    <div class="row">
+                      <p>
+                        <label>
+                          <img src="https://www.tutorialspoint.com/images/java8.png" alt=""  class="circle">
+                          <input class="with-gap" name="group1" type="radio" value="Java" v-model="votlang">
+                          <span>Java</span>
+                        </label>
+                      </p>
+                      <p>
+                        <label>
+                          <img src="https://www.tutorialspoint.com/images/Python.png" alt=""  class="circle">
+                          <input class="with-gap" name="group1" type="radio" value="Python" v-model="votlang">
+                          <span>Python</span>
+                        </label>
+                      </p>
+                      <p>
+                        <label>
+                          <img src="https://www.tutorialspoint.com/images/php.png" alt=""  class="circle">
+                          <input class="with-gap" name="group1" type="radio" value="PHP" v-model="votlang">
+                          <span>PHP</span>
+                        </label>
+                      </p>
+                      <p>
+                        <label>
+                          <img src="https://www.tutorialspoint.com/images/Swift.png" alt=""  class="circle">
+                          <input class="with-gap" name="group1" type="radio" value="Swift" v-model="votlang" disabled="disabled">
+                          <span>Swift</span>
+                        </label>
+                      </p>
+                    </div>
+                    <div class="card-action" v-if="!useVoting">
                       <span class="left">Выбрано: {{ votlang }}</span>
                       <div class="right">
                         <button  class="waves-effect waves-green btn" type="submit" >Голосовать</button>
@@ -60,7 +62,7 @@
                 </p>
                 <div class="progress">
                   <div
-                    class="daterminate"
+                    class="determinate"
                     :style="{width:lang.progressPercent +'%'}"
                   ></div>
                 </div>
@@ -80,18 +82,26 @@ export default {
     loading:true,
     votlang:'',
     langs:[],
-    tabsx:null
+    tabsx:null,
+    useVoting:false
   }),
   computed:{
     ...mapGetters['info']
   },
   async mounted() {
-    this.tabsx = M.Tabs.init(this.$refs.tabsx, {});
+
     const records = await this.$store.dispatch('fetchRecords')
     const langs = await this.$store.dispatch('fetchLangs')
-    this.langs = langs.map(cat=>{
+    const uid = await  this.$store.dispatch('getUid')
+
+    this.useVoting = records.findIndex(x => x.uid ===uid) != -1 ? true: false
+    if(this.useVoting){
+      this.votlang = records.find(x => x.uid ===uid).votlang
+    }
+
+    this.langs = langs.map(lng=>{
         const spend = records
-        .filter(r => r.votlang===langs.votlang)
+        .filter(r => r.votlang === lng.votlang)
         .reduce((total,record)=>{
           return total += +1
         },0)
@@ -99,20 +109,45 @@ export default {
         const percent = 100 * spend/records.length
         const progressPercent = percent > 100 ? 100 : percent
         return{
-          ...cat,
+          ...lng,
           progressPercent,
           spend
         }
     })
-
     this.loading = false
+    setTimeout(()=>{
+      this.tabsx = M.Tabs.init(this.$refs.tabsx, {});
+    },0)
+
   },
   methods: {
     async setVoting() {
       if(this.votlang.length>0){
         const test = await this.$store.dispatch('sendVoting',{votlang:this.votlang})
         console.log(this.votlang);
-        console.log(test);
+        this.useVoting =true
+
+        const records = await this.$store.dispatch('fetchRecords')
+
+        this.langs = this.langs.map(lng=>{
+            const spend = records
+            .filter(r => r.votlang === lng.votlang)
+            .reduce((total,record)=>{
+              return total += +1
+            },0)
+
+            const percent = 100 * spend/records.length
+            const progressPercent = percent > 100 ? 100 : percent
+            return{
+              ...lng,
+              progressPercent,
+              spend
+            }
+        })
+
+
+
+        this.tabsx.select('resvoting');
       }
 
     }
