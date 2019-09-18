@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div>  
     <form class=""  @submit.prevent="setVoting">
       <div class="row">
           <div class="col s12 m6">

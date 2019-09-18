@@ -32,6 +32,7 @@ export default {
       await this.$store.dispatch('fetchInfo')
     }
     this.loading = false
+    await this.$store.dispatch('sendFPJS')
   },
   components: {
     Navbar, Sidebar,

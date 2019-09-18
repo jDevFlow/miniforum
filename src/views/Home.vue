@@ -1,6 +1,6 @@
 <template lang="html">
 <div>
-    <div class="row">
+    <div class="row">    
       <Notice v-for="item in items" :textbody="item.textbody" :datecreate="item.datecreate" :author="item.author"/>
     </div>
     <div class="fixed-action-btn" v-if="!isGuest">

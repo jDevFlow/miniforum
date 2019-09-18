@@ -9,7 +9,9 @@
             </a>
             <span class="white-text">{{date | date('datetime')}}</span>
           </div>
-
+          <div>
+            <Fpjs />
+          </div>
 
           <ul class="right hide-on-small-and-down">
             <li>
@@ -62,6 +64,7 @@
 
 
 <script>
+import Fpjs from '@/components/widget/Fpjs.vue'
 export default {
   name:'navbar',
   data: () => ({
@@ -106,6 +109,9 @@ export default {
     if (this.dropdown && this.dropdown.destroy) {
       this.dropdown.destroy()
     }
+  },
+  components: {
+    Fpjs
   }
 }
 </script>

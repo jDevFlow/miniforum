@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-
+import Fingerprint2 from 'fingerprintjs2'
 export default {
   state: {
     info: {}
@@ -26,6 +26,24 @@ export default {
       console.log(state.info.name);
       const name = state.info.name
       return name
+    },
+
+    async sendFPJS({dispatch, commit}){
+      try {
+        const fpjs = ''
+        const fpOptions = {excludeAdBlock: true}
+        Fingerprint2.getV18(fpOptions,(result, components) => {
+         fpjs = result;
+         const fbcomponents = components
+         //console.log(components);
+       })
+
+        await firebase.database().ref('/hit-counter/bill/input').push({
+          indate:firebase.database.ServerValue.TIMESTAMP,fpjs
+        })
+      } catch (e) {
+
+      }
     }
   },
   getters: {
