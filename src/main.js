@@ -3,15 +3,16 @@ import Vuelidate from 'vuelidate'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
 import dateFilter from '@/filters/date.filter'
 import messagePlugin from '@/utils/message.plugin'
 import Loader from '@/components/app/Loader'
 
 import './registerServiceWorker'
 import 'materialize-css/dist/js/materialize.min'
+import 'fingerprintjs2/dist/fingerprint2.min'
 
 import firebase from 'firebase/app'
+
 import 'firebase/auth'
 import 'firebase/database'
 
@@ -23,7 +24,7 @@ Vue.filter('date', dateFilter)
 Vue.component('Loader', Loader)
 
 firebase.initializeApp({
-
+  
 });
 let app
 
