@@ -40,7 +40,7 @@
                       <p>
                         <label>
                           <img src="https://www.tutorialspoint.com/images/Swift.png" alt=""  class="circle">
-                          <input class="with-gap" name="group1" type="radio" value="Swift" v-model="votlang" disabled="disabled">
+                          <input class="with-gap" name="group1" type="radio" value="Swift" v-model="votlang">
                           <span>Swift</span>
                         </label>
                       </p>
@@ -144,12 +144,8 @@ export default {
               spend
             }
         })
-
-
-
         this.tabsx.select('resvoting');
       }
-
     }
   },
   beforeDestroy() {
