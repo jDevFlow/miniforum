@@ -31,8 +31,7 @@ export default {
     }else{
       await this.$store.dispatch('fetchInfo')
     }
-    this.loading = false
-    await this.$store.dispatch('sendFPJS')
+    this.loading = false  
   },
   components: {
     Navbar, Sidebar,

@@ -21,12 +21,21 @@ export default{
        new Fingerprint2.getV18(this.fpOptions,(result, components) => {
         this.fingerprint = result;
         this.fpComponents = components;// an array of FP components
-        //console.log(components);
+
       })
+    },
+    async saveFpjs(){
+      await this.$store.dispatch('sendFPJS',{fingerprint:this.fingerprint})
     }
   },
   created(){
-    this.fetchFingerprint();
+    this.fetchFingerprint()
+  },
+   watch: {
+    // whenever question changes, this function will run
+     fingerprint: async function (newFingerprint, oldFingerprint) {
+        await this.saveFpjs()
+    }
   }
 }
 </script>

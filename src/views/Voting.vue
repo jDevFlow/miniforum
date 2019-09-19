@@ -1,5 +1,5 @@
 <template>
-  <div>  
+  <div>
     <form class=""  @submit.prevent="setVoting">
       <div class="row">
           <div class="col s12 m6">
@@ -89,11 +89,9 @@ export default {
     ...mapGetters['info']
   },
   async mounted() {
-
     const records = await this.$store.dispatch('fetchRecords')
     const langs = await this.$store.dispatch('fetchLangs')
     const uid = await  this.$store.dispatch('getUid')
-
     this.useVoting = records.findIndex(x => x.uid ===uid) != -1 ? true: false
     if(this.useVoting){
       this.votlang = records.find(x => x.uid ===uid).votlang
@@ -124,11 +122,8 @@ export default {
     async setVoting() {
       if(this.votlang.length>0){
         const test = await this.$store.dispatch('sendVoting',{votlang:this.votlang})
-        console.log(this.votlang);
         this.useVoting =true
-
         const records = await this.$store.dispatch('fetchRecords')
-
         this.langs = this.langs.map(lng=>{
             const spend = records
             .filter(r => r.votlang === lng.votlang)
